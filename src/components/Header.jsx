@@ -13,11 +13,9 @@ export default function Header ({ data: { addTask, sortOption, setSortOption }})
       completed: false,
       id: crypto.randomUUID(),
     }
-
     addTask(newTask)
-  }
-
- 
+    setNewTaskName("")
+  } 
 
   return (
     <div>
@@ -25,6 +23,7 @@ export default function Header ({ data: { addTask, sortOption, setSortOption }})
       <form onSubmit={handleAddTask}>
         <input 
           type="text"
+          value={newTaskName}
           onChange={e => setNewTaskName(e.target.value)} 
         />
         <button 

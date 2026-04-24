@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export default function ToDoItem ({ data: {task, editTask, deleteTask} }) {
 
-  const {isReadOnly, setIsReadOnly} = useState(true)
+  const [isReadOnly, setIsReadOnly] = useState(true)
 
   const [updatedTaskName, setUpdatedTaskName] = useState(task.name)
 
@@ -15,7 +15,7 @@ export default function ToDoItem ({ data: {task, editTask, deleteTask} }) {
 
   function handleEdit () {
     if (!isReadOnly) {
-      editTask(task.id. {...task, name: updatedTaskName})
+      editTask(task.id, {...task, name: updatedTaskName})
     }
     setIsReadOnly(prev => !prev)
   }
