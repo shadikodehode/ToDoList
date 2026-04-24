@@ -4,7 +4,7 @@ import { useToDo } from "./hooks/useToDo.js"
 
 function App() {
 
-  const { addTask, sortOption } = useToDo()
+  const { addTask, sortOption, setSortOption, sortedData, editTask, deleteTask } = useToDo()
 
   
 
