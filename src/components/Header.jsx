@@ -19,7 +19,7 @@ export default function Header ({ data: { addTask, sortOption, setSortOption }})
 
   return (
     <div>
-      <h1> Header </h1>
+      <h1> Todo List </h1> {/* change this to {title} so you can change the title yourself */}
       <form onSubmit={handleAddTask}>
         <input 
           type="text"
@@ -28,9 +28,10 @@ export default function Header ({ data: { addTask, sortOption, setSortOption }})
         />
         <button 
           type="submit">
-            Submit Task
+            Submit
         </button>
       </form>
+      
       <select 
         value={sortOption.sortBy}
         onChange={(e) => 
@@ -42,6 +43,7 @@ export default function Header ({ data: { addTask, sortOption, setSortOption }})
         <option value="a-to-z">a-z</option>
         <option value="z-to-a">z-a</option>
       </select>
+
       <label 
         htmlFor="hideorshow"
       >

@@ -6,13 +6,18 @@ function App() {
 
   const { addTask, sortOption, setSortOption, sortedData, editTask, deleteTask } = useToDo()
 
-  
-
-
   return (
     <>
-      <Header data={{ addTask, sortOption, setSortOption }} />
-      <ToDoList data={{ sortedData, editTask, deleteTask }} />
+      <div className="grid grid-cols">
+        <div className="flex flex-col items-center">
+          <div className="flex flex-row">
+            <Header data={{ addTask, sortOption, setSortOption }} />
+          </div>
+          <div>
+            <ToDoList data={{ sortedData, editTask, deleteTask }} />
+          </div>
+        </div>
+      </div>
     </>
   )
 }
