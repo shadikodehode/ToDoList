@@ -6,6 +6,7 @@ export function ToDoProvider({ children }) {
 
  const [toDoData, setToDoData] = useState(() => {
     const savedData = localStorage.getItem("toDoData")
+    
     return savedData 
       ? JSON.parse(savedData).map(task => ({
         ...task,

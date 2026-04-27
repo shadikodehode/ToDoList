@@ -1,47 +1,66 @@
 import { useState } from "react"
+import deletepng from "/delete.png"
 
 export default function ToDoItem ({ data: {task, editTask, deleteTask} }) {
-
-  const [isReadOnly, setIsReadOnly] = useState(true)
-
+  const [isEditing, setIsEditing] = useState(false)
   const [updatedTaskName, setUpdatedTaskName] = useState(task.name)
+
+  function handleBlur() {
+    editTask(task.id, { ...task, name: updatedTaskName})
+    setIsEditing(false)
+  }
 
   function changeCompleted () {
     editTask(task.id, {...task, completed: !task.completed})
     
   }
   
-  const formattedTime = task.timestamp.toLocaleString("en-US")
-
-  function handleEdit () {
-    if (!isReadOnly) {
-      editTask(task.id, {...task, name: updatedTaskName})
-    }
-    setIsReadOnly(prev => !prev)
+  const formattedTime = task.timestamp.toLocaleDateString("en-US", {
+    year: "numeric", month: "short", day: "numeric"
   }
+  )
+
+  const sharedStyles = "turncate w-45 bg-transparent outline-none text-lg pb-1 leading-none"
   
   return (
-    <li>
-      <input 
-        type="checkbox" 
-        checked={task.completed} 
-        onChange={changeCompleted}
-      />
-      <p>{formattedTime}</p>
-      <input 
-        type="text" 
-        value={updatedTaskName} 
-        readOnly={isReadOnly}
-        onChange={(e) => setUpdatedTaskName(e.target.value)}
-      />
-      <button
-        onClick={handleEdit}>
-        {isReadOnly ? "Edit" : "Save"}
-      </button>
-      <button
-        onClick={() => deleteTask(task.id)}>
-        Delete
-      </button>
-    </li>
+    <div>
+      <li className="flex flex-col mb-4">
+
+        <div className="flex flex-row gap-2 justify-between border-b border-dotted p-2">
+          <input 
+            type="checkbox" 
+            checked={task.completed} 
+            onChange={changeCompleted}
+          />
+
+          <div>
+            {isEditing
+              ? <input
+                  className={sharedStyles} 
+                  autoFocus
+                  type="text" 
+                  value={updatedTaskName} 
+                  onChange={(e) => setUpdatedTaskName(e.target.value)}
+                  onBlur={handleBlur}
+                />
+              : <p
+                className={sharedStyles} 
+                onClick={() => setIsEditing(true)}>{updatedTaskName}</p>
+            }
+
+          </div>
+          <button
+              className="w-4 hover:opacity-70"
+              onClick={() => deleteTask(task.id)}>
+              <img 
+                src={deletepng} 
+                alt="delete" />
+            </button>
+        </div>
+        <p className="text-xs text-gray-500">
+          {formattedTime}
+        </p>
+      </li>
+    </div>
   )
 }

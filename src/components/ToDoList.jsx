@@ -1,8 +1,11 @@
+import { useToDo } from "../hooks/useToDo.js"
 import ToDoItem from "./ToDoItem.jsx"
 
-export default function ToDoList({ data: { sortedData, editTask, deleteTask }}) {
+export default function ToDoList() {
+  const { sortedData, editTask, deleteTask } = useToDo()
+
   if(sortedData.length === 0) {
-    return <h3> No task added yet</h3>
+    return <h3 className="p-8 -mt-4 font-semibold text-gray-700"> No notes added yet</h3>
   }
   return (
     <ul>
