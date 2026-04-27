@@ -28,6 +28,7 @@ export default function ToDoItem ({ data: {task, editTask, deleteTask} }) {
 
         <div className="flex flex-row gap-2 justify-between border-b border-dotted p-2">
           <input 
+            className="accent-zinc-700 dark:accent-zinc-100"
             type="checkbox" 
             checked={task.completed} 
             onChange={changeCompleted}
@@ -53,6 +54,7 @@ export default function ToDoItem ({ data: {task, editTask, deleteTask} }) {
               className="w-4 hover:opacity-70"
               onClick={() => deleteTask(task.id)}>
               <img 
+                className="dark:invert"
                 src={deletepng} 
                 alt="delete" />
             </button>

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { useToDo } from "../hooks/useToDo"
 import checkmark from "/checkmark.png"
+import sun from "/sun.png"
 
 export default function Header() {
-  const { addTask, sortOption, setSortOption } = useToDo()
+  const { addTask, sortOption, setSortOption, isDark, setIsDark  } = useToDo()
   const [newTaskName, setNewTaskName] = useState("")
   const [title, setTitle] = useState(() => localStorage.getItem("title") || "TODO")
   const [isEditingTitle, setIsEditingTitle] = useState(false)
@@ -25,25 +26,33 @@ export default function Header() {
     setNewTaskName("")
   } 
 
-  const sharedStyles = "font-bold text-4xl bg-transparent outline-none text-center w-full"
+  const sharedStyles = "font-bold text-4xl bg-transparent outline-none text-center w-full leading-none"
 
   return (
     <div className="flex flex-col p-4 gap-4 w-full items-center">
 
-      <div>
-        {isEditingTitle
-         ? <input
-              className={sharedStyles}
-              autoFocus
-              type="text"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-              onBlur={() => setIsEditingTitle(false)}
-            />
-          : <h1
-              className={sharedStyles} 
-              onClick={() => setIsEditingTitle(true)}>{title}</h1>
-        }
+      <div className="flex w-full">
+        <div className="w-6" />
+          <button className="flex -mt-2 -ml-10"
+          onClick={() => setIsDark(prev => !prev)}>
+            <img className="w-5 h-5 scale-x-[-1] dark:invert" src={sun} alt="sun" />
+        </button>
+          <div className="flex flex-1 ml-4 h-12 items-center">
+            {isEditingTitle
+              ? <input
+                  className={sharedStyles}
+                  autoFocus
+                  type="text"
+                  value={title}
+                  onChange={e => setTitle(e.target.value)}
+                  onBlur={() => setIsEditingTitle(false)}
+                />
+              : <h1
+                  className={sharedStyles} 
+                  onClick={() => setIsEditingTitle(true)}>{title}</h1>
+            }
+          </div>
+      
       </div>
 
       <div className="flex text-center items-center">
@@ -57,7 +66,7 @@ export default function Header() {
           <button className="pl-4"
             type="submit"
           >
-            <img className="w-4 hover:opacity-70" 
+            <img className="w-4 hover:opacity-70 dark:invert" 
               src={checkmark} 
               alt="checkmark" />
           </button>
@@ -85,6 +94,7 @@ export default function Header() {
           >
           hide completed:
           <input 
+            className="accent-zinc-700 dark:accent-zinc-100"
             type="checkbox" 
             id="hideorshow" 
             checked={sortOption.hideCompleted}
