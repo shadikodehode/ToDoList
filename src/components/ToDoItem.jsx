@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { useToDo } from "../hooks/useToDo.js"
 import deletepng from "/delete.png"
 
-export default function ToDoItem ({ data: {task, editTask, deleteTask} }) {
+export default function ToDoItem ({ data: {task} }) {
+  const { editTask, deleteTask } = useToDo()
   const [isEditing, setIsEditing] = useState(false)
   const [updatedTaskName, setUpdatedTaskName] = useState(task.name)
 
@@ -23,12 +25,11 @@ export default function ToDoItem ({ data: {task, editTask, deleteTask} }) {
   const sharedStyles = "turncate w-45 bg-transparent outline-none text-lg pb-1 leading-none"
   
   return (
-    <div>
-      <li className="flex flex-col mb-4">
+      <li className="flex flex-col mb-4 py-4">
 
-        <div className="flex flex-row gap-2 justify-between border-b border-dotted p-2">
+        <div className="flex gap-2 border-b border-dotted">
           <input 
-            className="accent-zinc-700 dark:accent-zinc-100"
+            className="accent-zinc-700 dark:accent-zinc-100 flex-1"
             type="checkbox" 
             checked={task.completed} 
             onChange={changeCompleted}
@@ -51,18 +52,18 @@ export default function ToDoItem ({ data: {task, editTask, deleteTask} }) {
 
           </div>
           <button
-              className="w-4 hover:opacity-70"
+              className="w-4.1 hover:opacity-70"
               onClick={() => deleteTask(task.id)}>
               <img 
                 className="dark:invert"
                 src={deletepng} 
-                alt="delete" />
+                alt="delete" 
+              />
             </button>
         </div>
         <p className="text-xs text-gray-500">
           {formattedTime}
         </p>
       </li>
-    </div>
   )
 }

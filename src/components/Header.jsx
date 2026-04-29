@@ -4,7 +4,7 @@ import checkmark from "/checkmark.png"
 import sun from "/sun.png"
 
 export default function Header() {
-  const { addTask, sortOption, setSortOption, isDark, setIsDark  } = useToDo()
+  const { addTask, sortOption, setSortOption, setIsDark  } = useToDo()
   const [newTaskName, setNewTaskName] = useState("")
   const [title, setTitle] = useState(() => localStorage.getItem("title") || "TODO")
   const [isEditingTitle, setIsEditingTitle] = useState(false)
@@ -31,13 +31,13 @@ export default function Header() {
   return (
     <div className="flex flex-col p-4 gap-4 w-full items-center">
 
-      <div className="flex w-full">
+      <div className="flex w-full ">
         <div className="w-6" />
           <button className="flex -mt-2 -ml-10"
           onClick={() => setIsDark(prev => !prev)}>
             <img className="w-5 h-5 scale-x-[-1] dark:invert" src={sun} alt="sun" />
         </button>
-          <div className="flex flex-1 ml-4 h-12 items-center">
+          <div className="flex flex-1 h-12 items-center">
             {isEditingTitle
               ? <input
                   className={sharedStyles}
@@ -52,25 +52,29 @@ export default function Header() {
                   onClick={() => setIsEditingTitle(true)}>{title}</h1>
             }
           </div>
-      
       </div>
 
-      <div className="flex text-center items-center">
-        <form onSubmit={handleAddTask}>
-          <input className="border-b border-dotted outline-none"
+      <div className="flex w-full text-center border-b border-dotted">
+        <form className="flex w-full" onSubmit={handleAddTask}>
+          <input className="outline-none flex-1"
             type="text"
             value={newTaskName}
             onChange={e => setNewTaskName(e.target.value)} 
             placeholder="Note..."
           />
-          <button className="pl-4"
-            type="submit"
-          >
-            <img className="w-4 hover:opacity-70 dark:invert" 
-              src={checkmark} 
-              alt="checkmark" />
-          </button>
+          <button 
+              className="hover:opacity-70 shrink-0"
+              type="button"
+              onClick={handleAddTask}
+            >
+              <img 
+                className="w-4 dark:invert"
+                src={checkmark} 
+                alt="checkmark" 
+              />
+            </button>
         </form>
+          
       </div>
 
       <div className="flex flex-row justify-between text-xs text-gray-600 w-55">
