@@ -10,7 +10,7 @@ export default function ToDoList() {
   return (
     <ul className="p-4 w-full">
       {sortedData.map(task => {
-        return <ToDoItem key={task.id} data={{ task }}/>
+        return <ToDoItem key={task.id} data={task}/>
       })}
     </ul>
   )

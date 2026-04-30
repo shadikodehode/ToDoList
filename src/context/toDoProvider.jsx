@@ -16,7 +16,7 @@ export default function ToDoProvider({ children }) {
 
   const [sortOption, setSortOption] = useState(() => {
     const savedSort = localStorage.getItem("sortOption")
-    return JSON.parse(savedSort) || { sortBy: "newest", hideCompleted: false }
+    return JSON.parse(savedSort) ?? { sortBy: "newest", hideCompleted: false }
   })
 
   useEffect(() => {
@@ -36,20 +36,22 @@ export default function ToDoProvider({ children }) {
     setToDoData((prev) => prev.map(task => (task.id === id ? {...task, ...updatedTask} : task)))
   }, [])
 
-    const sortedData = [...toDoData]
-      .filter(task => !task.completed || !sortOption.hideCompleted)
-      .sort((a, b) => {
-        switch (sortOption.sortBy)  {
-          case "a-to-z":
-            return a.name.localeCompare(b.name)
-          case "z-to-a":
-            return b.name.localeCompare(a.name)
-          case "oldest":
-            return a.timestamp - b.timestamp
-          case "newest":
-            return b.timestamp - a.timestamp
-        }
-      })
+    const sortedData = useMemo(() => 
+      [...toDoData]
+        .filter(task => !task.completed || !sortOption.hideCompleted)
+        .sort((a, b) => {
+          switch (sortOption.sortBy)  {
+            case "a-to-z":
+              return a.name.localeCompare(b.name)
+            case "z-to-a":
+              return b.name.localeCompare(a.name)
+            case "oldest":
+              return a.timestamp - b.timestamp
+            case "newest":
+              return b.timestamp - a.timestamp
+          }
+        })
+    ) 
 
     const value = useMemo(() => ({
     sortedData, addTask, deleteTask, editTask, sortOption, setSortOption
