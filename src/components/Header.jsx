@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
-import { useToDo } from "../hooks/useToDo"
+import { useToDo } from "../context/ToDoContext.jsx"
+import { useTheme } from "../context/ThemeContext.jsx"
 import checkmark from "/checkmark.png"
 import sun from "/sun.png"
 
 export default function Header() {
-  const { addTask, sortOption, setSortOption, setIsDark  } = useToDo()
+  const { addTask, sortOption, setSortOption } = useToDo()
+  const { setIsDark } = useTheme()
   const [newTaskName, setNewTaskName] = useState("")
   const [title, setTitle] = useState(() => localStorage.getItem("title") || "TODO")
   const [isEditingTitle, setIsEditingTitle] = useState(false)

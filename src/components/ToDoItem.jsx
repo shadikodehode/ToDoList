@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useToDo } from "../hooks/useToDo.js"
+import { useToDo } from "../context/ToDoContext.jsx"
 import deletepng from "/delete.png"
 
 export default function ToDoItem ({ data: {task} }) {
@@ -14,13 +14,11 @@ export default function ToDoItem ({ data: {task} }) {
 
   function changeCompleted () {
     editTask(task.id, {...task, completed: !task.completed})
-    
   }
   
   const formattedTime = task.timestamp.toLocaleDateString("en-US", {
     year: "numeric", month: "short", day: "numeric"
-  }
-  )
+  })
 
   const sharedStyles = "turncate w-45 bg-transparent outline-none text-lg pb-1 leading-none"
   

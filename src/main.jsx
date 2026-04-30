@@ -2,12 +2,15 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './style.css'
 import App from './App.jsx'
-import { ToDoProvider } from './context/toDoProvider.jsx'
+import ToDoProvider from './context/ToDoProvider.jsx'
+import ThemeProvider from './context/ThemeProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ToDoProvider>
-      <App />
-    </ToDoProvider>
+    <ThemeProvider>
+      <ToDoProvider>
+        <App />
+      </ToDoProvider>
+    </ThemeProvider>
   </StrictMode>,
 )

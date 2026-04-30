@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { ToDoContext } from "./ToDoContext.jsx"
 
-export function ToDoProvider({ children }) {
+export default function ToDoProvider({ children }) {
 
  const [toDoData, setToDoData] = useState(() => {
     const savedData = localStorage.getItem("toDoData")
@@ -24,23 +24,17 @@ export function ToDoProvider({ children }) {
     localStorage.setItem("sortOption", JSON.stringify(sortOption))
   }, [toDoData, sortOption])
 
-  const [isDark, setIsDark] = useState(() => JSON.parse(localStorage.getItem("isDark")) || false)
-
-  useEffect(() => {
-    localStorage.setItem("isDark", JSON.stringify(isDark))
-    document.documentElement.classList.toggle("dark", isDark)
-  }, [isDark])
-
-  function addTask(newTask) {
+  const addTask = useCallback((newTask) => {
     setToDoData((prev) => [...prev, newTask])
-  }
+  }, [])
 
-  function deleteTask(id) {
+  const deleteTask = useCallback((id) => {
     setToDoData((prev) => prev.filter(task  => task.id !== id))
-  }
-  function editTask(id, updatedTask) {
+  }, [])
+
+  const editTask = useCallback((id, updatedTask) => {
     setToDoData((prev) => prev.map(task => (task.id === id ? {...task, ...updatedTask} : task)))
-  }
+  }, [])
 
     const sortedData = [...toDoData]
       .filter(task => !task.completed || !sortOption.hideCompleted)
@@ -56,10 +50,13 @@ export function ToDoProvider({ children }) {
             return b.timestamp - a.timestamp
         }
       })
-  
 
+    const value = useMemo(() => ({
+    sortedData, addTask, deleteTask, editTask, sortOption, setSortOption
+    }), [sortedData, addTask, deleteTask, editTask, sortOption])
+  
   return (
-    <ToDoContext.Provider value={{ sortedData, addTask, deleteTask, editTask, sortOption, setSortOption, isDark, setIsDark }}>
+    <ToDoContext.Provider value={value}>
       {children}     
     </ToDoContext.Provider>
   )
