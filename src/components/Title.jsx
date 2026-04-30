@@ -20,7 +20,8 @@ export function Title() {
                 />
               : <h1
                   className={sharedStyles} 
-                  onClick={() => setIsEditingTitle(true)}>{title}</h1>
+                  onClick={() => setIsEditingTitle(true)}>
+                  {title || "Add title"}</h1>
             }
           </div>
   )

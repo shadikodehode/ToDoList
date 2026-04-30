@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useToDo } from "../context/ToDoContext.jsx"
 import deletepng from "/delete.png"
 
-export default function ToDoItem ({ data: {task} }) {
+export default function ToDoItem ({ task }) {
   const { editTask, deleteTask } = useToDo()
   const [isEditing, setIsEditing] = useState(false)
   const [updatedTaskName, setUpdatedTaskName] = useState(task.name)
@@ -20,7 +20,7 @@ export default function ToDoItem ({ data: {task} }) {
     year: "numeric", month: "short", day: "numeric"
   })
 
-  const sharedStyles = "turncate w-45 bg-transparent outline-none text-lg pb-1 leading-none"
+  const sharedStyles = "truncate w-45 bg-transparent outline-none text-lg pb-1 leading-none"
   
   return (
       <li className="flex flex-col mb-4 py-4">

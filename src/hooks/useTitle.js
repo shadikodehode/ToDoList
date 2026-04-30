@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react"
+import { useLocalStorage } from "./useLocalStorage"
 
 export function useTitle() {
-  const [title, setTitle] = useState(() => localStorage.getItem("title") || "TODO")
-   useEffect(() =>  localStorage.setItem("title", title), [title])
+  const [title, setTitle] = useLocalStorage("title", "TODO")
 
   return [title, setTitle]
 }
